@@ -5,7 +5,7 @@ APPLICATION = e01_hello_world
 BOARD ?= native
 
 # absolute path of RIOT-OS
-RIOTBASE ?= $(CURDIR)/..
+RIOTBASE ?= $(CURDIR)/../RIOT
 
 # enable safety checking for development
 DEVELHELP ?= 1

@@ -3,7 +3,7 @@
 
 int main(void)
 {
-  printf("Hello world!\n");
+  printf("This board features a(n) %s MCU.\n", RIOT_MCU);
 
   return 0;
 }
