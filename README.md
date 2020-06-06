@@ -23,3 +23,13 @@ From the root directory:
 ```bash
 make BOARD=<board> -C <example> term
 ```
+
+## Examples
+
+### e01_hello_world
+
+Hello world application. Playing with `printf`.
+
+### e02_thread_pingpong
+
+One thread is sending a message to another one every 1 second. Playing with `thread_create`, `msg_receive`, `msg_send`, `xtimer_sleep`.
