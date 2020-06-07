@@ -33,3 +33,7 @@ Hello world application. Playing with `printf`.
 ### e02_thread_pingpong
 
 One thread is sending a message to another one every 1 second. Playing with `thread_create`, `msg_receive`, `msg_send`, `xtimer_sleep`.
+
+### e03_new_shell_command
+
+New (custom) shell command. Playing with `shell_run`.
