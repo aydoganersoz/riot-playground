@@ -30,4 +30,4 @@
 
 ## Currently
 
-- https://github.com/riot-os/riot-course/tree/master/exercises/getting-started/sensor
+- https://riot-os.github.io/riot-course/slides/02-getting-started/#18
