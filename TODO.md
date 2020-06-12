@@ -30,4 +30,6 @@
 
 ## Currently
 
-- https://riot-os.github.io/riot-course/slides/02-getting-started/#18
+- https://github.com/riot-os/riot-course/tree/master/exercises/riot-basics/thread-concurrency
+- tests/thread_*
+- tests/mutex_*

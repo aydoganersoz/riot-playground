@@ -45,3 +45,7 @@ Toggling LED. Playing with `LED*_<state>` macros.
 ### e05_hts221_sensor
 
 Reading temperature and humidity from HTS221 sensor. Playing with `hts221_*` functions.
+
+### e06_thread_concurrency
+
+Writing to and reading from a mutual buffer using mutex. Playing with `mutex_lock`, `mutex_unlock`, `xtimer_usleep` functions.
