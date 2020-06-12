@@ -48,4 +48,8 @@ Reading temperature and humidity from HTS221 sensor. Playing with `hts221_*` fun
 
 ### e06_thread_concurrency
 
-Writing to and reading from a mutual buffer using mutex. Playing with `mutex_lock`, `mutex_unlock`, `xtimer_usleep` functions.
+Writing to and reading from a mutual buffer using mutex. Playing with `mutex_lock`, `mutex_unlock`, `xtimer_usleep`, `xtimer_now` functions.
+
+### e07_thread_ipc
+
+A blocking receive call in a separate thread is waiting for a message from the shell. Playing with `msg_send`, `msg_receive` functions.
