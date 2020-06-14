@@ -53,3 +53,7 @@ Writing to and reading from a mutual buffer using mutex. Playing with `mutex_loc
 ### e07_thread_ipc
 
 A blocking receive call in a separate thread is waiting for a message from the shell. Playing with `msg_send`, `msg_receive` functions.
+
+### e08_xtimer_advanced
+
+An independent thread is waking up every three seconds and setting a timer with a callback function. When callback function is invoked, it sends an immediate message to the receiver thread. Playing with `msg_receive`, `xtimer_now`, `xtimer_periodic_wakeup`, `xtimer_set`, `xtimer_set_msg` functions.

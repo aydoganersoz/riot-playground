@@ -30,7 +30,7 @@
 
 ## Currently
 
-- https://riot-os.github.io/riot-course/slides/03-riot-basics/#20
+- https://riot-os.github.io/riot-course/slides/03-riot-basics/#27
 - tests/thread_*
 - tests/mutex_*
 - tests/msg_*
