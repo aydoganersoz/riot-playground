@@ -30,7 +30,8 @@
 
 ## Currently
 
-- https://riot-os.github.io/riot-course/slides/03-riot-basics/#29
+- https://github.com/riot-os/riot-course/tree/master/exercises/riot-basics/rtc
 - tests/thread_*
 - tests/mutex_*
 - tests/msg_*
+- tests/periph_*

@@ -28,36 +28,40 @@ make BOARD=<board> -C <example> term
 
 ### e01_hello_world
 
-Hello world application. Playing with `printf` function.
+Hello world application. Playing with `printf`.
 
 ### e02_thread_pingpong
 
-One thread is sending a message to another one every 1 second. Playing with `thread_create`, `msg_receive`, `msg_send`, `xtimer_sleep` functions.
+One thread is sending a message to another one every one second. Playing with `thread_create`, `msg_receive`, `msg_send`, `xtimer_sleep`.
 
 ### e03_new_shell_command
 
-New (custom) shell command. Playing with `shell_run` function.
+Defining a new shell command. Playing with `shell_run`.
 
 ### e04_toggle_led
 
-Toggling LED. Playing with `LED*_<state>` macros.
+Toggling a LED. Playing with `LED*_<state>`.
 
 ### e05_hts221_sensor
 
-Reading temperature and humidity from HTS221 sensor. Playing with `hts221_*` functions.
+Reading temperature and humidity values from HTS221 sensor. Playing with `hts221_*`.
 
 ### e06_thread_concurrency
 
-Writing to and reading from a mutual buffer using mutex. Playing with `mutex_lock`, `mutex_unlock`, `xtimer_usleep`, `xtimer_now` functions.
+Writing to and reading from a mutual buffer using mutex. Playing with `mutex_lock`, `mutex_unlock`, `xtimer_usleep`, `xtimer_now`.
 
 ### e07_thread_ipc
 
-A blocking receive call in a separate thread is waiting for a message from the shell. Playing with `msg_send`, `msg_receive` functions.
+A blocking receive call in a thread is waiting for a message from the shell. Playing with `msg_send`, `msg_receive`.
 
 ### e08_xtimer_advanced
 
-An independent thread is waking up every three seconds and setting a timer with a callback function. When callback function is invoked, it sends an immediate message to the receiver thread. Playing with `msg_receive`, `xtimer_now`, `xtimer_periodic_wakeup`, `xtimer_set`, `xtimer_set_msg` functions.
+An independent thread is waking up every three seconds and setting a timer which is associated with a callback function. When callback function is invoked, it sends an immediate message to the receiver thread. Playing with `msg_receive`, `xtimer_now`, `xtimer_periodic_wakeup`, `xtimer_set`, `xtimer_set_msg`.
 
 ### e09_exti_interrupt
 
-Button press is detected by an external interrupt and interrupt callback sends an immediate message to a receiver thread to blink a LED. Playing with `gpio_init`, `gpio_init_int`, `msg_send_int` functions, `gpio_cb_t` types, `LED*_<state>` macros.
+Button press event is detected by an EXTI interrupt. When callback function is invoked, it sends an immediate message to a receiver thread to blink a LED. Playing with `gpio_init`, `gpio_init_int`, `msg_send_int`, `gpio_cb_t`, `LED*_<state>`.
+
+### e10_uart_read
+
+Characters are read by a UART receive interrupt. When callback function is invoked, it sends an immediate message to a receiver thread to print the characters read. Playing with `uart_init`, `msg_init_queue`, `msg_send_int`, `uart_rx_cb_t`, `DEBUG_ASSERT_VERBOSE`.
