@@ -2,28 +2,31 @@
 #include "thread.h"
 #include "msg.h"
 #include "board.h"
-#include "periph/uart.h"
+#include "xtimer.h"
+#include "periph/rtc.h"
+#include "periph/gpio.h"
 
-#define UART_DEVICE (UART_DEV(0))
-#define RCV_QUEUE_SIZE (16) // must be a power of two
+#define LED_ON_DURATION (1)
 
 static char receiver_thread_stack[THREAD_STACKSIZE_DEFAULT + THREAD_EXTRA_STACKSIZE_PRINTF];
 static kernel_pid_t receiver_thread_pid;
-static msg_t rcv_queue[RCV_QUEUE_SIZE];
+static struct tm alarm_time, cur_time;
 
 static void *receiver_thread(void *arg);
-static void uart_rx_callback(void *arg, uint8_t data);
+static void rtc_alarm_callback(void *arg);
+static void set_rtc_alarm(void);
 
 int main(void)
 {
-  printf("uart read example\n");
+  printf("rtc alarm example\n");
 
-  int res = uart_init(UART_DEVICE, 115200, uart_rx_callback, NULL);
-  if (res != UART_OK)
-  {
-    printf("uart initialize error\n");
-    return -1;
-  }
+  gpio_init(LED1_PIN, GPIO_OUT);
+  LED1_OFF;
+
+  rtc_init();
+  rtc_poweron();
+  rtc_tm_normalize(&alarm_time);
+  rtc_tm_normalize(&cur_time);
 
   receiver_thread_pid = thread_create(receiver_thread_stack,
                                       sizeof(receiver_thread_stack),
@@ -33,6 +36,8 @@ int main(void)
                                       NULL,
                                       "receiver thread");
 
+  set_rtc_alarm();
+
   return 0;
 }
 
@@ -41,24 +46,34 @@ static void *receiver_thread(void *arg)
   (void)arg;
 
   printf("receiver thread is starting\n");
-  msg_init_queue(rcv_queue, RCV_QUEUE_SIZE);
-
-  msg_t msg;
 
   while (1)
   {
+    msg_t msg;
+
     msg_receive(&msg);
-    printf("%c\n", (char)msg.content.value);
+    LED1_ON;
+    xtimer_sleep(LED_ON_DURATION);
+    LED1_OFF;
+    rtc_get_time(&cur_time);
+    printf("rtc time is: %d:%d:%d\n", cur_time.tm_hour, cur_time.tm_min, cur_time.tm_sec);
+    set_rtc_alarm();
   }
 
   return NULL;
 }
 
-static void uart_rx_callback(void *arg, uint8_t data)
+static void rtc_alarm_callback(void *arg)
 {
   (void)arg;
   msg_t msg;
 
-  msg.content.value = data;
   msg_send_int(&msg, receiver_thread_pid);
+}
+
+static void set_rtc_alarm(void)
+{
+  rtc_get_alarm(&alarm_time);
+  alarm_time.tm_sec += 5;
+  rtc_set_alarm(&alarm_time, rtc_alarm_callback, NULL);
 }
