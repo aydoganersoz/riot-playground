@@ -65,3 +65,7 @@ Button press event is detected by an EXTI interrupt. When callback function is i
 ### e10_uart_read
 
 Characters are read by a UART receive interrupt. When callback function is invoked, it sends an immediate message to a receiver thread to print the characters read. Playing with `uart_init`, `msg_init_queue`, `msg_send_int`, `uart_rx_cb_t`, `DEBUG_ASSERT_VERBOSE`.
+
+### e11_rtc_alarm
+
+An RTC alarm is set every five seconds. When callback function of the RTC alarm interupt is invoked, it sends an immediate message to a receiver thread to toggle a LED for one second. Playing with `rtc_set_alarm`, `rtc_alarm_cb_t`, `rtc_get_time`, `rtc_tm_normalize`, `rtc_poweron`, `rtc_init`.

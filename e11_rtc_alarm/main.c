@@ -6,11 +6,12 @@
 #include "periph/rtc.h"
 #include "periph/gpio.h"
 
-#define LED_ON_DURATION (1)
+#define LED_ON_DURATION (1U)
+#define RTC_ALARM_PERIOD (5U)
 
-static char receiver_thread_stack[THREAD_STACKSIZE_DEFAULT + THREAD_EXTRA_STACKSIZE_PRINTF];
+static char receiver_thread_stack[THREAD_STACKSIZE_DEFAULT];
 static kernel_pid_t receiver_thread_pid;
-static struct tm alarm_time, cur_time;
+static struct tm rtc_time;
 
 static void *receiver_thread(void *arg);
 static void rtc_alarm_callback(void *arg);
@@ -25,8 +26,7 @@ int main(void)
 
   rtc_init();
   rtc_poweron();
-  rtc_tm_normalize(&alarm_time);
-  rtc_tm_normalize(&cur_time);
+  rtc_tm_normalize(&rtc_time);
 
   receiver_thread_pid = thread_create(receiver_thread_stack,
                                       sizeof(receiver_thread_stack),
@@ -36,7 +36,8 @@ int main(void)
                                       NULL,
                                       "receiver thread");
 
-  set_rtc_alarm();
+  msg_t msg;
+  msg_send(&msg, receiver_thread_pid);
 
   return 0;
 }
@@ -55,8 +56,8 @@ static void *receiver_thread(void *arg)
     LED1_ON;
     xtimer_sleep(LED_ON_DURATION);
     LED1_OFF;
-    rtc_get_time(&cur_time);
-    printf("rtc time is: %d:%d:%d\n", cur_time.tm_hour, cur_time.tm_min, cur_time.tm_sec);
+    rtc_get_time(&rtc_time);
+    printf("rtc time is: %d:%d:%d\n", rtc_time.tm_hour, rtc_time.tm_min, rtc_time.tm_sec);
     set_rtc_alarm();
   }
 
@@ -73,7 +74,6 @@ static void rtc_alarm_callback(void *arg)
 
 static void set_rtc_alarm(void)
 {
-  rtc_get_alarm(&alarm_time);
-  alarm_time.tm_sec += 5;
-  rtc_set_alarm(&alarm_time, rtc_alarm_callback, NULL);
+  rtc_time.tm_sec += RTC_ALARM_PERIOD;
+  rtc_set_alarm(&rtc_time, rtc_alarm_callback, NULL);
 }

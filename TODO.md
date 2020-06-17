@@ -30,7 +30,7 @@
 
 ## Currently
 
-- https://github.com/riot-os/riot-course/tree/master/exercises/riot-basics/rtc
+- https://github.com/riot-os/riot-course/tree/master/exercises/riot-basics/drivers
 - tests/thread_*
 - tests/mutex_*
 - tests/msg_*
