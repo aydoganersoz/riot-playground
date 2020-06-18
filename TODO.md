@@ -30,7 +30,7 @@
 
 ## Currently
 
-- https://github.com/riot-os/riot-course/tree/master/exercises/riot-basics/drivers
+- https://riot-os.github.io/riot-course/slides/04-networking-in-riot/#13
 - tests/thread_*
 - tests/mutex_*
 - tests/msg_*
