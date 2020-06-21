@@ -13,8 +13,10 @@ DEVELHELP ?= 1
 # don't show compiler invocation lines:
 QUIET ?= 1
 
-# use modules
-FEATURES_REQUIRED += periph_gpio
-FEATURES_REQUIRED += periph_gpio_irq
+# use module
+USEMODULE += xtimer
+
+# application specific cflags
+CFLAGS += -DDEBUG_ASSERT_VERBOSE
 
 include $(RIOTBASE)/Makefile.include

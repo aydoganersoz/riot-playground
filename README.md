@@ -69,3 +69,11 @@ Characters are read by a UART receive interrupt. When callback function is invok
 ### e11_rtc_alarm
 
 An RTC alarm is set every five seconds. When callback function of the RTC alarm interupt is invoked, it sends an immediate message to a receiver thread to toggle a LED for one second. Playing with `rtc_set_alarm`, `rtc_alarm_cb_t`, `rtc_get_time`, `rtc_tm_normalize`, `rtc_poweron`, `rtc_init`.
+
+### e12_thread_sleep_wakeup
+
+An EXTI interrupt is waking up a sleeping thread. Playing with `thread_sleep`, `thread_wakeup`, `msg_send_int`, `msg_try_receive`.
+
+### e13_thread_yield
+
+Two same priority threads yield in the middle of their loop. Playing with `thread_yield`.

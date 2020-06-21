@@ -1,59 +1,73 @@
 #include <stdio.h>
 #include "thread.h"
-#include "msg.h"
-#include "board.h"
-#include "periph/gpio.h"
+#include "xtimer.h"
 
-static char receiver_thread_stack[THREAD_STACKSIZE_MAIN];
-static kernel_pid_t receiver_thread_pid;
+static char thread_1_stack[THREAD_STACKSIZE_MAIN];
+static char thread_2_stack[THREAD_STACKSIZE_MAIN];
+static kernel_pid_t thread_1_pid, thread_2_pid;
 
-static void *receiver_thread(void *arg);
-static void gpio_callback(void *arg);
+static void *thread_1(void *arg);
+static void *thread_2(void *arg);
 
 int main(void)
 {
-  printf("thread sleep example\n");
+  printf("thread yield example\n");
 
-  gpio_init(LED1_PIN, GPIO_OUT);
-  LED1_OFF;
-  gpio_init_int(BTN1_PIN, BTN1_MODE, GPIO_FALLING, gpio_callback, NULL);
+  thread_1_pid = thread_create(thread_1_stack,
+                              sizeof(thread_1_stack),
+                              (THREAD_PRIORITY_MAIN - 1),
+                              THREAD_CREATE_STACKTEST,
+                              thread_1,
+                              NULL,
+                              "thread 1");
 
-  receiver_thread_pid = thread_create(receiver_thread_stack,
-                                      sizeof(receiver_thread_stack),
-                                      (THREAD_PRIORITY_MAIN - 1),
-                                      THREAD_CREATE_STACKTEST,
-                                      receiver_thread,
-                                      NULL,
-                                      "receiver thread");
+  thread_2_pid = thread_create(thread_2_stack,
+                               sizeof(thread_2_stack),
+                               (THREAD_PRIORITY_MAIN - 1),
+                               THREAD_CREATE_STACKTEST,
+                               thread_2,
+                               NULL,
+                               "thread 2");
 
   return 0;
 }
 
-static void *receiver_thread(void *arg)
+static void *thread_1(void *arg)
 {
   (void)arg;
 
-  printf("receiver thread is starting\n");
-  msg_t msg;
+  printf("thread 1 is starting\n");
+  uint32_t cnt = 0;
 
   while (1)
   {
-    thread_sleep();
-    printf("message received from interrupt\n");
-    msg_try_receive(&msg);
-    LED1_TOGGLE;
+    printf("[t1] %ld before yield\n", cnt);
+    xtimer_sleep(1);
+    thread_yield();
+    printf("[t1] %ld after yield\n", cnt);
+    xtimer_sleep(1);
+    cnt++;
   }
 
   return NULL;
 }
 
-static void gpio_callback(void *arg)
+static void *thread_2(void *arg)
 {
   (void)arg;
 
-  msg_t msg;
+  printf("thread 2 is starting\n");
+  uint32_t cnt = 0;
 
-  thread_wakeup(receiver_thread_pid);
-  msg_send_int(&msg, receiver_thread_pid);
-  printf("message sent from interrupt\n");
+  while (1)
+  {
+    printf("[t2] %ld before yield\n", cnt);
+    xtimer_sleep(1);
+    thread_yield();
+    printf("[t2] %ld after yield\n", cnt);
+    xtimer_sleep(1);
+    cnt++;
+  }
+
+  return NULL;
 }
