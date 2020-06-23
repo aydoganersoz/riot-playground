@@ -42,11 +42,10 @@ static void *thread_1(void *arg)
   while (1)
   {
     printf("thread 1 counter %ld\n", cnt);
-    if (cnt == 10)
+    if (cnt == 5)
     {
       printf("thread 1 will zombify itself now...\n");
-      // zombify (suspend the thread forever)
-      thread_zombify();
+      thread_zombify(); // zombify (suspend the thread forever)
     }
     cnt++;
     xtimer_sleep(1);

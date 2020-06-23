@@ -77,3 +77,7 @@ An EXTI interrupt is waking up a sleeping thread. Playing with `thread_sleep`, `
 ### e13_thread_yield
 
 Two same priority threads yield in the middle of their loop. Playing with `thread_yield`.
+
+### e14_thread_zombify
+
+Two threads running in parallel in the beginning. First thread zombifies itself after five seconds and then second thread kills the zombified thread. Playing with `thread_zombify`, `thread_kill_zombie`.
