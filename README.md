@@ -81,3 +81,7 @@ Two same priority threads yield in the middle of their loop. Playing with `threa
 ### e14_thread_zombify
 
 Two threads running in parallel in the beginning. First thread zombifies itself after five seconds and then second thread kills the zombified thread. Playing with `thread_zombify`, `thread_kill_zombie`.
+
+### e15_thread_flags
+
+Three EXTI interrupts are set to signal three different waiting threads. First thread is waiting for a specific event flag to be set so first EXTI interrupt is setting this flag. Similarly, second thread is waiting for any event flag to be set so second EXTI interrupt is setting one of these flags. Again similarly, third thread is waiting for all event flags to be set so third EXTI interrupt is setting all of these flags. Playing with `thread_flags_set`, `thread_flags_wait_one`, `thread_flags_wait_any`, `thread_flags_wait_all`, `thread_get`.

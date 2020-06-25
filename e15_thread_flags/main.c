@@ -26,7 +26,11 @@ int main(void)
   printf("thread flags example\n");
 
   gpio_init(LED1_PIN, GPIO_OUT);
+  gpio_init(LED2_PIN, GPIO_OUT);
+  gpio_init(LED3_PIN, GPIO_OUT);
   LED1_OFF;
+  LED2_OFF;
+  LED3_OFF;
   gpio_init_int(BTN0_PIN, BTN0_MODE, GPIO_FALLING, btn0_callback, NULL);
   gpio_init_int(BTN1_PIN, BTN1_MODE, GPIO_FALLING, btn1_callback, NULL);
   gpio_init_int(BTN2_PIN, BTN2_MODE, GPIO_FALLING, btn2_callback, NULL);
@@ -65,7 +69,7 @@ static void *one_receiver_thread(void *arg)
   while (1)
   {
     thread_flags_wait_one(event0_flag);
-    printf("cccc\n");
+    printf("the waiting flag is set\n");
     LED1_TOGGLE;
   }
 
@@ -79,8 +83,8 @@ static void *any_receiver_thread(void *arg)
   while (1)
   {
     thread_flags_wait_any(event0_flag | event1_flag | event2_flag);
-    printf("aaaaaa\n");
-    LED1_TOGGLE;
+    printf("a waiting flag is set\n");
+    LED2_TOGGLE;
   }
 
   return NULL;
@@ -93,8 +97,8 @@ static void *all_receiver_thread(void *arg)
   while (1)
   {
     thread_flags_wait_all(event0_flag | event1_flag | event2_flag);
-    printf("bbbb\n");
-    LED1_TOGGLE;
+    printf("all the waiting flags are set\n");
+    LED3_TOGGLE;
   }
 
   return NULL;
@@ -105,7 +109,6 @@ static void btn0_callback(void *arg)
   (void)arg;
 
   thread_flags_set((thread_t *)thread_get(one_receiver_thread_pid), event0_flag);
-  printf("event0 flag is set from interrupt\n");
 }
 
 static void btn1_callback(void *arg)
@@ -113,7 +116,6 @@ static void btn1_callback(void *arg)
   (void)arg;
 
   thread_flags_set((thread_t *)thread_get(any_receiver_thread_pid), event1_flag);
-  printf("event1 flag is set from interrupt\n");
 }
 
 static void btn2_callback(void *arg)
@@ -121,5 +123,4 @@ static void btn2_callback(void *arg)
   (void)arg;
 
   thread_flags_set((thread_t *)thread_get(all_receiver_thread_pid), event0_flag | event1_flag | event2_flag);
-  printf("event2 flag is set from interrupt\n");
 }
