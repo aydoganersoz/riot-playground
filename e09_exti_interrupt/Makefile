@@ -13,7 +13,7 @@ DEVELHELP ?= 1
 # don't show compiler invocation lines:
 QUIET ?= 1
 
-# use modules
+# required features
 FEATURES_REQUIRED += periph_gpio
 FEATURES_REQUIRED += periph_gpio_irq
 

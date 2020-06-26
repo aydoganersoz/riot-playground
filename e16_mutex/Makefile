@@ -1,5 +1,5 @@
 # application name
-APPLICATION = e15_thread_flags
+APPLICATION = e16_mutex
 
 # board
 BOARD ?= native
@@ -13,15 +13,11 @@ DEVELHELP ?= 1
 # don't show compiler invocation lines:
 QUIET ?= 1
 
-# use module
+# use xtimer module
 USEMODULE += xtimer
-USEMODULE += core_thread_flags
 
 # required features
 FEATURES_REQUIRED += periph_gpio
 FEATURES_REQUIRED += periph_gpio_irq
-
-# application specific cflags
-CFLAGS += -DDEBUG_ASSERT_VERBOSE
 
 include $(RIOTBASE)/Makefile.include
