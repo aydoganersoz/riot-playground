@@ -85,3 +85,7 @@ Two threads running in parallel in the beginning. First thread zombifies itself 
 ### e15_thread_flags
 
 Three EXTI interrupts are set to signal three different waiting threads. First thread is waiting for a specific event flag to be set so first EXTI interrupt is setting this flag. Similarly, second thread is waiting for any event flag to be set so second EXTI interrupt is setting one of these flags. Again similarly, third thread is waiting for all event flags to be set so third EXTI interrupt is setting all of these flags. Playing with `thread_flags_set`, `thread_flags_wait_one`, `thread_flags_wait_any`, `thread_flags_wait_all`, `thread_get`.
+
+### e16_mutex
+
+Two threads trying to print their IDs using mutex to reach the printing resource. An EXTI interrupt is set to enable/disable mutex. When mutex is used, printed strings are as expected and vice versa. Playing with `mutex_lock`, `mutex_unlock`, `thread_yield`.

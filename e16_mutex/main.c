@@ -17,7 +17,7 @@ static void btn0_callback(void *arg);
 
 int main(void)
 {
-  puts("thread concurrency example");
+  puts("mutex example");
 
   mutex_enabled = true;
 
