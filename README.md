@@ -89,3 +89,7 @@ Three EXTI interrupts are set to signal three different waiting threads. First t
 ### e16_mutex
 
 Two threads trying to print their IDs using mutex to reach the printing resource. An EXTI interrupt is set to enable/disable mutex. When mutex is used, printed strings are as expected and vice versa. Playing with `mutex_lock`, `mutex_unlock`, `thread_yield`.
+
+### e17_semaphore
+
+Four threads trying to lock semaphore whose initial value is two. First two threads lock the semaphore for ten first seconds and then release it. Third thread only gets the semaphore once one of the first two threads releases it. Third thread locks the semapthore for two seconds and then releases it. Similarly, fourth thread only gets the semaphore once the other of the first two threads releases it. Fourth thread locks the thread periodically. Playing with `sema_create`, `sema_wait`, `sema_post`.
